@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 let posts = require('../db/posts.json');
+const { error } = require('console');
 
 const index = (req, res) => {
   let html = '<ul>';
@@ -31,6 +32,7 @@ const show = (req, res) => {
     res.status(404).send(`<h2>Post non trovato</h2>`);
   }
 };
+
 const create = (req, res) => {
   res.format({
     html: () => {
@@ -42,8 +44,23 @@ const create = (req, res) => {
   });
 };
 
+const download = (req, res) => {
+  const postDownload = posts.find((post) => post.slug === req.params.slug);
+  if (postDownload) {
+    const filePath = path.join(
+      __dirname,
+      '../public/imgs/posts/',
+      postDownload.image
+    );
+    res.download(filePath);
+  } else {
+    res.status(404).json({ error: 'non trovato' });
+  }
+};
+
 module.exports = {
   index,
   show,
   create,
+  download,
 };
