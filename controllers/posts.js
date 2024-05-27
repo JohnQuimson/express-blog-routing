@@ -28,13 +28,22 @@ const show = (req, res) => {
   if (postRichiesto) {
     res.json(postRichiesto);
   } else {
-    res.status(404).send(`<h1>Post non trovato</h1>`);
+    res.status(404).send(`<h2>Post non trovato</h2>`);
   }
 };
-// const create = (req, res) => {};
+const create = (req, res) => {
+  res.format({
+    html: () => {
+      res.send('<h2>Creazione nuovo post</h2>');
+    },
+    default: () => {
+      res.status(406).send('Errore');
+    },
+  });
+};
 
 module.exports = {
   index,
   show,
-  // create,
+  create,
 };
