@@ -22,11 +22,19 @@ const index = (req, res) => {
   html += '<ul>';
   res.send(html);
 };
-// const show = (req, res) => {};
+
+const show = (req, res) => {
+  const postRichiesto = posts.find((post) => post.slug === req.params.slug);
+  if (postRichiesto) {
+    res.json(postRichiesto);
+  } else {
+    res.status(404).send(`<h1>Post non trovato</h1>`);
+  }
+};
 // const create = (req, res) => {};
 
 module.exports = {
   index,
-  // show,
+  show,
   // create,
 };
