@@ -8,8 +8,7 @@ app.use(express.static('./public'));
 
 // routers
 app.get('/', (req, res) => {
-  const filePath = path.join(__dirname, './index.html');
-  res.sendFile(filePath);
+  res.send(`<h1>Posts</h1>`);
 });
 
 app.use('/posts', postsRouter);
